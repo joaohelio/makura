@@ -193,6 +193,10 @@ module Makura
     end
     alias bulk_save bulk_docs
 
+    def bulk_get(ids)
+      post("_bulk_get", :payload => {:docs => ids.map {|id| {:id => id}}}, 'Content-Type' => 'application/json')
+    end
+
     def get_attachment(doc, file_id)
       doc_id = doc.respond_to?(:_id) ? doc._id : doc.to_str
       file_id, doc_id = Makura.escape(file_id), Makura.escape(doc_id)
